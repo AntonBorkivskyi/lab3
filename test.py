@@ -4,9 +4,10 @@ import lab3
 print("-----------------------")
 words = "Would you like to change properties? "
 words2 = "Would you like to add or to remove properties? "
-answer = lab3.get_valid_input(words, ("yes", "no")).lower()
+
 agent = lab3.Agent()
 while True:
+    answer = lab3.get_valid_input(words, ("yes", "no")).lower()
     if answer == "yes":
         answer_yes = lab3.get_valid_input(words2, ("add", "remove")).lower()
         if answer_yes == "add":
