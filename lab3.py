@@ -289,10 +289,13 @@ class Agent:
         """
         Initialize new instance
         """
-        self.property_list = [(("house", "rental"), HouseRental),
-                              (("house", "purchase"), HousePurchase),
-                              (("apartment", "rental"), ApartmentRental),
-                              (("apartment", "purchase"), ApartmentPurchase)]
+        self.property_list = []
+
+    property_dict = {
+        ("house", "rental"): HouseRental,
+        ("house", "purchase"): HousePurchase,
+        ("apartment", "rental"): ApartmentRental,
+        ("apartment", "purchase"): ApartmentPurchase}
 
     def display_properties(self):
         """
@@ -303,9 +306,33 @@ class Agent:
 
     def adding_property(self):
         """
-        Add property and option
+        Add property
         """
         property_type = get_valid_input("Type of property: ",
                                         ("house", "apartment")).lower()
         option_type = get_valid_input("Type of option: ",
-                                        ("purchase", "rentak")).lower()
+                                        ("purchase", "rental")).lower()
+        prop_opt_tupl = (property_type, option_type)
+        prop_class = self.property_dict[prop_opt_tupl]
+
+        args = prop_class.prompt_init()
+        self.property_list.append(prop_class(**args))
+        print("Successfuly added")
+
+    def removing_property(self):
+        """
+        Remove property
+        """
+        property_type = get_valid_input("Type of property: ",
+                                        ("house", "apartment")).lower()
+        option_type = get_valid_input("Type of option: ",
+                                      ("purchase", "rental")).lower()
+        prop_opt_tupl = (property_type, option_type)
+        prop_class = self.property_dict[prop_opt_tupl]
+
+        args = prop_class.prompt_init()
+        if prop_class(**args) in self.property_list:
+            self.property_list.remove(prop_class(**args))
+            print("Successfuly removed")
+        else:
+            print("There no properties")
