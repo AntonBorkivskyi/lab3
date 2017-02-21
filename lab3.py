@@ -289,9 +289,23 @@ class Agent:
         """
         Initialize new instance
         """
-        self.property_list = []
+        self.property_list = [(("house", "rental"), HouseRental),
+                              (("house", "purchase"), HousePurchase),
+                              (("apartment", "rental"), ApartmentRental),
+                              (("apartment", "purchase"), ApartmentPurchase)]
 
     def display_properties(self):
-        """Display property"""
+        """
+        Display property
+        """
         for property in self.property_list:
             property.display()
+
+    def adding_property(self):
+        """
+        Add property and option
+        """
+        property_type = get_valid_input("Type of property: ",
+                                        ("house", "apartment")).lower()
+        option_type = get_valid_input("Type of option: ",
+                                        ("purchase", "rentak")).lower()
